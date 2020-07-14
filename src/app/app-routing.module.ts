@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AppComponent} from './app.component';
 
+import {LoginComponent} from './login/login.component';
 import {GalleryComponent} from './gallery/gallery.component';
 import {AuthGuardService} from './services/auth.guard.service';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: 'login', component: AppComponent},
-  {path: '/gallery', component: GalleryComponent, canActivate: [AuthGuardService]},
+  // {path: '', component: LoginComponent,  pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
+  {path: 'gallery', component: GalleryComponent, canActivate: [AuthGuardService]},
 ];
 
 @NgModule({
@@ -18,5 +19,5 @@ const routes: Routes = [
 export class AppRoutingModule { }
 
 export const routingComponents = [
-GalleryComponent
+GalleryComponent, LoginComponent
 ];

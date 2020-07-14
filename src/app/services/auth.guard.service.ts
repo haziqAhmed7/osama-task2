@@ -2,7 +2,9 @@ import {Injectable} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
 import {UserService} from './user.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthGuardService implements CanActivate {
  constructor(
    private router: Router,
@@ -12,7 +14,7 @@ export class AuthGuardService implements CanActivate {
   canActivate() {
    const temp = this.consumerService.getUser();
    if ( typeof temp === 'undefined') {
-     this.router.navigateByUrl('/');
+     this.router.navigateByUrl('/login');
      return false;
    }
    return true;
