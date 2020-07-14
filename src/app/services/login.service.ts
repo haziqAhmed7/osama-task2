@@ -13,7 +13,8 @@ export class LoginService {
       let response = {status: 1, message: null, data: null};
       const url = 'https://localhost:44310/api/Authenticaion/signin';
       const payload = {
-
+          UserName: email,
+          UserPassword: password
       };
       await this.http.post(url, payload)
       .toPromise()
