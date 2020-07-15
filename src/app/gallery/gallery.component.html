@@ -25,7 +25,13 @@ color="primary">Upload
 
 <!-- Gallery Section -->
 <div *ngIf="showUploadForm">
-  <h3>Upload Form</h3>
+  <div *ngIf="isUploading">
+    <h3>Uploading ...</h3>
+    <mat-spinner  diameter=30></mat-spinner>
+  </div>
+
+  <div *ngIf="isUploading == false">
+    <h3>Upload Form</h3>
   <br>
   <input type='file' (change)="onSelectFile($event)" multiple/>
   <br>
@@ -35,4 +41,7 @@ color="primary">Upload
           class='uploadButton'
           color='primary'>
   Upload</button>
+  </div>
+  
+
 </div>

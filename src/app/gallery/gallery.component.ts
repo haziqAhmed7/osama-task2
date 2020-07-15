@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { UserService } from "../services/user.service";
 import { GalleryService } from "../services/gallery.service";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: "app-gallery",
@@ -17,7 +18,8 @@ export class GalleryComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private gallery: GalleryService
+    private gallery: GalleryService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit() {
@@ -44,7 +46,12 @@ export class GalleryComponent implements OnInit {
   }
 
   startUpload(){
-
+    if (this.imagesUpload.length > 5) {
+      this.openSnackBar('MAximum Images is 5');
+      return null;
+    }
+    console.log(this.imagesUpload);
+    this.upload();
   }
 
   // private methods
@@ -53,10 +60,20 @@ export class GalleryComponent implements OnInit {
     const response = await this.gallery.fetchGallery(
       this.userService.getUser().userId
     );
-    console.log(response);
+    // console.log(response);
     this.imagesGallery = Array.isArray(response) ? response : [];
-    console.log(this.imagesGallery);
+    // console.log(this.imagesGallery);
     this.toggleShowGalleryLoading();
+    return null;
+  }
+
+  private async upload(): Promise<object> {
+    // upload now...
+  
+    this.toggleUploadForm();
+    this.toggleIsUploading();
+    this.toggleShowGalleryLoading();
+    await this.fetchGallery();
     return null;
   }
 
@@ -70,5 +87,11 @@ export class GalleryComponent implements OnInit {
 
   private toggleIsUploading() {
     this.isUploading = ! this.isUploading;
+  }
+
+  private openSnackBar(message: string, duration = 2000) {
+    this.snackBar.open(message, null, {
+      duration: duration,
+    });
   }
 }
