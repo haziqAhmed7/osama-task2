@@ -91,6 +91,9 @@ export class GalleryComponent implements OnInit {
     this.toggleShowGalleryLoading();
     // this.toggleShowGalleryLoading();
     await this.fetchGallery();
+    if (this.showGalleryLoading) {
+      this.showGalleryLoading = false;
+    }
     return null;
   }
 
