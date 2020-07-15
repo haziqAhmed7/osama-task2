@@ -10,6 +10,7 @@ import {GalleryService} from '../services/gallery.service';
 export class GalleryComponent implements OnInit{
   
   showGalleryLoading = true;
+  showUploadForm = false;
   imagesGallery = [];
   userName: string;
 
@@ -28,6 +29,15 @@ export class GalleryComponent implements OnInit{
 
   private toggleShowGalleryLoading() {
     this.showGalleryLoading = ! this.showGalleryLoading;
+  }
+
+  private toggleUploadForm() {
+    this.showUploadForm = ! this.showUploadForm;
+  }
+
+  showForm() {
+    this.toggleShowGalleryLoading();
+    this.toggleUploadForm();
   }
 
   private async fetchGallery(): Promise<object>{

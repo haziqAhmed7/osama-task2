@@ -1,5 +1,10 @@
-<h3>{{userName}}</h3>
-<button mat-raised-button color="primary">Upload </button>
+<!-- Gallery Section -->
+<div *ngIf="showUploadForm == false">
+  <h3>{{userName}}</h3>
+<button mat-raised-button 
+(click)="showForm()" 
+color="primary">Upload 
+</button>
 
 <h3>Gallery Images</h3>
 
@@ -16,3 +21,9 @@
       src="{{record.imageName}}"
       />
  </div>
+</div>
+
+<!-- Gallery Section -->
+<div *ngIf="showUploadForm">
+  <p>Upload Form</p>
+</div>
