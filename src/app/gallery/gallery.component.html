@@ -1,1 +1,18 @@
-<p>Gallery works!!!</p>
+<h3>{{userName}}</h3>
+<button mat-raised-button color="primary">Upload </button>
+
+<h3>Gallery Images</h3>
+
+<mat-spinner
+ diameter=30
+ *ngIf="showGalleryLoading"
+ ></mat-spinner>
+
+ <div *ngIf="showGalleryLoading == false">
+   <img  
+      class='gallery-image'
+      width="40" height="40"
+      *ngFor="let record of imagesGallery"
+      src="{{record.imageName}}"
+      />
+ </div>

@@ -11,6 +11,7 @@ export class GalleryComponent implements OnInit{
   
   showGalleryLoading = true;
   imagesGallery = [];
+  userName: string;
 
   constructor(
     private userService: UserService,
@@ -18,7 +19,11 @@ export class GalleryComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-
+    this.userName = [
+      this.userService.getUser().firstName, 
+      this.userService.getUser().lastName
+    ].join(' ');
+    this.fetchGallery();
   }
 
   private toggleShowGalleryLoading() {
@@ -30,8 +35,10 @@ export class GalleryComponent implements OnInit{
     const response = await this.gallery.fetchGallery(
       this.userService.getUser().userId
       );
+     console.log(response); 
      this.imagesGallery = (Array.isArray(response)) ? response : []; 
-    this.toggleShowGalleryLoading();
-    return null;
+     console.log(this.imagesGallery); 
+     this.toggleShowGalleryLoading();
+     return null;
   }
 }
