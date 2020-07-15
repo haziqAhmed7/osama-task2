@@ -50,6 +50,7 @@ export class GalleryComponent implements OnInit {
       this.openSnackBar('MAximum Images is 5');
       return null;
     }
+    this.toggleIsUploading();
     console.log(this.imagesUpload);
     this.upload();
   }
@@ -77,6 +78,8 @@ export class GalleryComponent implements OnInit {
     const response = await this.gallery.uploadImage(
       this.userService.getUser().userId, frmData
     );
+    
+    this.toggleIsUploading();
 
     if (response['status'] < 1) {
       this.openSnackBar(response['message']); 

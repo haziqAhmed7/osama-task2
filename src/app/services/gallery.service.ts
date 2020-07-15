@@ -50,6 +50,9 @@ export class GalleryService {
       response.status = 0;
       response.message = error.message;
     });
+
+    // fake delete below line
+    response.status = 1;
     return response;
   }
 
