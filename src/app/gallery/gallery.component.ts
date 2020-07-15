@@ -69,10 +69,24 @@ export class GalleryComponent implements OnInit {
 
   private async upload(): Promise<object> {
     // upload now...
-  
+    const frmData = new FormData();  
+    for(let i=0; i<this.imagesUpload.length; i++) {
+      frmData.append('', this.imagesUpload[i]);
+    }
+    // call service here
+    const response = await this.gallery.uploadImage(
+      this.userService.getUser().userId, frmData
+    );
+
+    if (response['status'] < 1) {
+      this.openSnackBar(response['message']); 
+      return null;
+    }
+    // uploaded head back to gallery now...
     this.toggleUploadForm();
     this.toggleIsUploading();
     this.toggleShowGalleryLoading();
+    // this.toggleShowGalleryLoading();
     await this.fetchGallery();
     return null;
   }

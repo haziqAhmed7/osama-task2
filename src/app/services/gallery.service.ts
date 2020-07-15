@@ -34,6 +34,25 @@ export class GalleryService {
     return this.loadFakeData();
   }
 
+  public async uploadImage(userId: string, files: any): Promise<object> {
+    const url = 'https://localhost:44310/api/image/UploadFiles';
+    const response = {status: 0, message: null};
+    const payload = {
+          UserGuid: userId,
+          files
+    };
+    await this.http.post(url, payload).toPromise()
+    .then(data => {
+      response.status = 1;
+      response.message = 'Success';
+    })
+    .catch(error => {
+      response.status = 0;
+      response.message = error.message;
+    });
+    return response;
+  }
+
   private loadFakeData() {
     return [
       {
