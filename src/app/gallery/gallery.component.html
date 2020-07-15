@@ -25,5 +25,13 @@ color="primary">Upload
 
 <!-- Gallery Section -->
 <div *ngIf="showUploadForm">
-  <p>Upload Form</p>
+  <h3>Upload Form</h3>
+  <br>
+  <input type='file' (change)="onSelectFile($event)" multiple/>
+  <br>
+  <br>
+  <button mat-raised-button 
+          class='uploadButton'
+          color='primary'>
+  Upload</button>
 </div>

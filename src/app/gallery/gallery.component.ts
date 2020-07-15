@@ -27,19 +27,14 @@ export class GalleryComponent implements OnInit{
     this.fetchGallery();
   }
 
-  private toggleShowGalleryLoading() {
-    this.showGalleryLoading = ! this.showGalleryLoading;
-  }
-
-  private toggleUploadForm() {
-    this.showUploadForm = ! this.showUploadForm;
-  }
-
   showForm() {
     this.toggleShowGalleryLoading();
     this.toggleUploadForm();
   }
 
+  onSelectFile(event) {}
+  
+  // private methods
   private async fetchGallery(): Promise<object>{
     this.imagesGallery = [];
     const response = await this.gallery.fetchGallery(
@@ -50,5 +45,13 @@ export class GalleryComponent implements OnInit{
      console.log(this.imagesGallery); 
      this.toggleShowGalleryLoading();
      return null;
+  }
+
+   private toggleShowGalleryLoading() {
+    this.showGalleryLoading = ! this.showGalleryLoading;
+  }
+
+  private toggleUploadForm() {
+    this.showUploadForm = ! this.showUploadForm;
   }
 }
