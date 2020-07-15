@@ -63,7 +63,7 @@ export class GalleryComponent implements OnInit {
     );
     // console.log(response);
     this.imagesGallery = Array.isArray(response) ? response : [];
-    // console.log(this.imagesGallery);
+    console.log(this.imagesGallery);
     this.toggleShowGalleryLoading();
     return null;
   }
@@ -78,7 +78,7 @@ export class GalleryComponent implements OnInit {
     const response = await this.gallery.uploadImage(
       this.userService.getUser().userId, frmData
     );
-    
+
     this.toggleIsUploading();
 
     if (response['status'] < 1) {
