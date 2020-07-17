@@ -16,6 +16,10 @@ export class GalleryComponent implements OnInit {
   imagesUpload = [];
   userName: string;
 
+  uploadingProgressBarValue = 0;
+  currentUploadingNumber = 0;
+  cancelUploadTrigger = false;
+
   constructor(
     private userService: UserService,
     private gallery: GalleryService,
@@ -55,6 +59,10 @@ export class GalleryComponent implements OnInit {
     this.upload();
   }
 
+  cancelUpload(){
+    this.cancelUploadTrigger = true;
+  }
+
   // private methods
   private async fetchGallery(): Promise<object> {
     this.imagesGallery = [];
@@ -69,31 +77,33 @@ export class GalleryComponent implements OnInit {
   }
 
   private async upload(): Promise<object> {
-    // upload now...
-    const frmData = new FormData();  
+    
     for(let i=0; i<this.imagesUpload.length; i++) {
-      frmData.append('', this.imagesUpload[i]);
-    }
-    // call service here
-    const response = await this.gallery.uploadImage(
-      this.userService.getUser().userId, frmData
-    );
+      // check if user has cancelled upload
+      if (this.cancelUpload) {
+        return;
+      }
 
-    this.toggleIsUploading();
-
-    if (response['status'] < 1) {
-      this.openSnackBar(response['message']); 
-      return null;
+      // upload now...
+      this.currentUploadingNumber = i + 1;
+      const frmData = new FormData();  
+      frmData.append('files', this.imagesUpload[i]);
+      setTimeout(async() => {
+          if (!this.cancelUploadTrigger) {
+            await this.gallery.uploadImage(
+              this.userService.getUser().userId, frmData
+            );
+          }
+      }, 200);
     }
-    // uploaded head back to gallery now...
-    this.toggleUploadForm();
-    this.toggleIsUploading();
-    this.toggleShowGalleryLoading();
-    // this.toggleShowGalleryLoading();
+    
+    this.switchBackToGallery();
     await this.fetchGallery();
     if (this.showGalleryLoading) {
       this.showGalleryLoading = false;
     }
+    this.cancelUploadTrigger = false;
+    this.currentUploadingNumber = 0;
     return null;
   }
 
@@ -114,4 +124,12 @@ export class GalleryComponent implements OnInit {
       duration: duration,
     });
   }
+
+  private switchBackToGallery() {
+     this.toggleIsUploading();
+    // uploaded head back to gallery now...
+    this.toggleUploadForm();
+    this.toggleIsUploading();
+    this.toggleShowGalleryLoading();
+  } 
 }
