@@ -7,7 +7,7 @@ import {GalleryComponent} from './gallery/gallery.component';
 import {AuthGuardService} from './services/auth.guard.service';
 
 const routes: Routes = [
-  // {path: '', component: LoginComponent,  pathMatch: 'full'},
+  {path: '', component: LoginComponent,  pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'gallery', component: GalleryComponent, canActivate: [AuthGuardService]},
 ];

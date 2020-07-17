@@ -81,6 +81,7 @@ export class GalleryComponent implements OnInit {
   }
 
   private async upload(): Promise<object> {
+    this.cancelUploadTrigger = false;
     this.uploadingProgressBarValue = 0;
     for(let i=0; i<this.imagesUpload.length; i++) {
       // check if user has cancelled upload
