@@ -61,6 +61,10 @@ export class GalleryComponent implements OnInit {
 
   cancelUpload(){
     this.cancelUploadTrigger = true;
+    this.uploadingProgressBarValue = 0;
+    this.currentUploadingNumber = 0;
+    console.log(this.cancelUploadTrigger);
+    this.switchBackToGallery();
   }
 
   // private methods
@@ -77,10 +81,10 @@ export class GalleryComponent implements OnInit {
   }
 
   private async upload(): Promise<object> {
-    
+    this.uploadingProgressBarValue = 0;
     for(let i=0; i<this.imagesUpload.length; i++) {
       // check if user has cancelled upload
-      if (this.cancelUpload) {
+      if (this.cancelUploadTrigger) {
         return;
       }
 
@@ -88,13 +92,14 @@ export class GalleryComponent implements OnInit {
       this.currentUploadingNumber = i + 1;
       const frmData = new FormData();  
       frmData.append('files', this.imagesUpload[i]);
-      setTimeout(async() => {
-          if (!this.cancelUploadTrigger) {
-            await this.gallery.uploadImage(
-              this.userService.getUser().userId, frmData
+      if (!this.cancelUploadTrigger) {
+          await this.gallery.uploadImage( this.userService.getUser().userId, 
+          frmData);
+          // set uploadingProgressBarValue
+          this.uploadingProgressBarValue = Math.round(
+            (this.currentUploadingNumber/this.imagesUpload.length) * 100
             );
-          }
-      }, 200);
+      }
     }
     
     this.switchBackToGallery();
@@ -127,9 +132,9 @@ export class GalleryComponent implements OnInit {
 
   private switchBackToGallery() {
      this.toggleIsUploading();
+     if (this.isUploading) { this.isUploading = false; }
     // uploaded head back to gallery now...
     this.toggleUploadForm();
-    this.toggleIsUploading();
     this.toggleShowGalleryLoading();
   } 
 }

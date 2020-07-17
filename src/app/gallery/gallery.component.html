@@ -27,15 +27,16 @@ color="primary">Upload
 <div *ngIf="showUploadForm">
   <div *ngIf="isUploading">
     <h3>Uploading {{currentUploadingNumber}} of {{imagesUpload.length}}</h3>
-    <button mat-raised-button color="warn" 
-                              (click)="cancelUpload()">
-    Cancel Upload                          
-    </button>
-    
+    <br>
     <mat-progress-bar color="primary" 
                       mode="determinate"
                       [value]="uploadingProgressBarValue">
     </mat-progress-bar>
+    <br>
+    <button mat-raised-button color="warn" 
+                              (click)="cancelUpload()">
+    Cancel Upload                          
+    </button>
   </div>
 
   <div *ngIf="isUploading == false">
