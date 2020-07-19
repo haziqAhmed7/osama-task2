@@ -14,15 +14,23 @@ color="primary">Upload
  ></mat-spinner>
 
  <div *ngIf="showGalleryLoading == false">
+   <div>
+     <button mat-flat-button color="accent" style="margin-right:5px"
+            (click)="decrement()">Back</button>
+            
+     <button mat-flat-button color="accent"
+            (click)="increment()" >Next</button>
+   </div>
+   <br>
    <img  
       class='gallery-image'
       width="40" height="40"
-      *ngFor="let record of imagesGallery"
-      src="{{record.imageName}}"
+      
+      src="{{imageToDisplay}}"
       />
  </div>
 </div>
-
+<!--*ngFor="let record of imagesGallery"  -->
 <!-- Upload Section -->
 <div *ngIf="showUploadForm">
   <div *ngIf="isUploading">

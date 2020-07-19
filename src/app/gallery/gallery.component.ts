@@ -20,6 +20,9 @@ export class GalleryComponent implements OnInit {
   currentUploadingNumber = 0;
   cancelUploadTrigger = false;
 
+  currentIndex = 0;
+  imageToDisplay = null;
+
   constructor(
     private userService: UserService,
     private gallery: GalleryService,
@@ -67,6 +70,20 @@ export class GalleryComponent implements OnInit {
     this.switchBackToGallery();
   }
 
+  increment() {
+    if (this.currentIndex +1 <= (this.imagesGallery.length -1)) {
+      this.currentIndex += 1;
+      this.imageToDisplay = this.imagesGallery[this.currentIndex]['imageName'];
+    }
+  }
+
+  decrement() {
+    if ((this.currentIndex -1) >= 0 ) {
+      this.currentIndex -= 1;
+      this.imageToDisplay = this.imagesGallery[this.currentIndex]['imageName'];
+    }
+  }
+
   // private methods
   private async fetchGallery(): Promise<object> {
     this.imagesGallery = [];
@@ -77,6 +94,8 @@ export class GalleryComponent implements OnInit {
     this.imagesGallery = Array.isArray(response) ? response : [];
     console.log(this.imagesGallery);
     this.toggleShowGalleryLoading();
+    // show first Image
+    this.showFirstImage();
     return null;
   }
 
@@ -137,5 +156,12 @@ export class GalleryComponent implements OnInit {
     // uploaded head back to gallery now...
     this.toggleUploadForm();
     this.toggleShowGalleryLoading();
+  }
+
+  private showFirstImage() {
+    if (this.imagesGallery.length > 0) {
+      this.currentIndex = 0;
+      this.imageToDisplay = this.imagesGallery[this.currentIndex]['imageName'];
+    }
   } 
 }
